@@ -7,8 +7,11 @@
 ## 🚀 Quick Start
 
 ```bash
-mvn -Pnative native:compile
-./target/demo-app
+./mvnw -Pnative native:compile -Dmaven.test.skip=true
+
+cd target/hello-springboot-native/bin
+
+./start.sh
 ```
 
 ## ✨ Features

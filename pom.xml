@@ -215,7 +215,6 @@
                             <exclude>static/**</exclude>
                             <exclude>templates/**</exclude>
                             <exclude>application*.yml</exclude>
-                            <exclude>logback-spring.xml</exclude>
                         </excludes>
                     </resource>
                     <resource>
@@ -231,7 +230,6 @@
                         <targetPath>${project.build.directory}/${project.artifactId}/config</targetPath>
                         <includes>
                             <include>application*.yml</include>
-                            <include>logback-spring.xml</include>
                         </includes>
                     </resource>
                     <resource>
