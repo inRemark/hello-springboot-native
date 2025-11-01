@@ -1,0 +1,15 @@
+spring:
+  thymeleaf:
+    encoding: UTF-8
+    mode: HTML
+    prefix: file:${APP_HOME}/html/templates/
+    suffix: .html
+    cache: true
+  web:
+    resources:
+      static-locations: file:${APP_HOME}/html/static
+
+logging:
+  config: ${APP_HOME}/config/logback-spring.xml
+  level:
+    org.springframework: warn

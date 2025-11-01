@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: hello-springboot-native
+  profiles:
+    active: dev
+
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    org.springframework: warn

@@ -1,0 +1,22 @@
+FROM ghcr.io/graalvm/native-image-community:25-ol9 AS builder
+
+WORKDIR /workspace
+COPY pom.xml .
+COPY src ./src
+
+# GraalVM CE 通常已包含 native-image，但验证一下
+RUN gu list || gu install native-image
+
+# Build Spring Boot native image for Linux; name the binary 'app'
+RUN ./mvnw -Pnative -DskipTests -Dnative.imageName=app native:compile
+
+# ---- Runtime stage ----
+FROM ubuntu:22.04
+
+WORKDIR /app
+COPY --from=build /workspace/target/app ./app
+RUN groupadd -r spring && useradd -r -g spring spring
+USER spring
+
+EXPOSE 8080
+ENTRYPOINT ["./app"]
