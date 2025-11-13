@@ -123,7 +123,7 @@
                             <imageName>app</imageName>
                             <buildArgs>
                                 <buildArg>--verbose</buildArg>
-                                <buildArg>--enable-url-protocols=http,https,file</buildArg>
+                                <buildArg>--enable-url-protocols=http,https</buildArg>
                                 <buildArg>-H:Path=${project.build.directory}</buildArg>
                             </buildArgs>
                         </configuration>
