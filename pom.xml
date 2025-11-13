@@ -120,12 +120,11 @@
                         </executions>
                         <configuration>
                             <mainClass>com.asyncbee.starter.StarterApp</mainClass>
-                            <imageName>${project.artifactId}</imageName>
+                            <imageName>app</imageName>
                             <buildArgs>
                                 <buildArg>--verbose</buildArg>
                                 <buildArg>--enable-url-protocols=http,https,file</buildArg>
                                 <buildArg>-H:Path=${project.build.directory}</buildArg>
-                                <buildArg>-H:Name=${project.artifactId}</buildArg>
                             </buildArgs>
                         </configuration>
                     </plugin>

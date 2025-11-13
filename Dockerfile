@@ -1,4 +1,4 @@
-FROM ghcr.io/graalvm/native-image-community:25-ol9 AS builder
+FROM eclipse-temurin:21.0.9_10-jdk-ubi10-minimal AS builder
 
 ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US:en \
