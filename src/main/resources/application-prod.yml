@@ -1,17 +1,7 @@
-server:
-  port: 8082
 spring:
   thymeleaf:
     encoding: UTF-8
     mode: HTML
-    prefix: file:${APP_HOME}/html/templates/
+    prefix: classpath:/templates/
     suffix: .html
     cache: true
-  web:
-    resources:
-      static-locations: file:${APP_HOME}/html/static
-
-#logging:
-#  config: ${APP_HOME}/config/logback-spring.xml
-#  level:
-#    org.springframework: warn

@@ -44,7 +44,7 @@
         <url/>
     </scm>
     <properties>
-        <java.version>25</java.version>
+        <java.version>21</java.version>
         <spring-boot.version>3.5.7</spring-boot.version>
     </properties>
 
@@ -92,109 +92,7 @@
 
     <profiles>
         <!-- ============================================= -->
-        <!-- Profile 1: Springboot JAR Build (default)        -->
-        <!-- ============================================= -->
-        <profile>
-            <id>jar</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <skipTests>false</skipTests>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>repackage</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <!-- ============================================= -->
-        <!-- Profile 2: JAR Package Build                  -->
-        <!-- ============================================= -->
-        <profile>
-            <id>jar-package</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <skipTests>false</skipTests>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>repackage</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/${project.artifactId}/lib</outputDirectory>
-                        </configuration>
-                    </plugin>
-                </plugins>
-                <resources>
-                    <resource>
-                        <directory>${basedir}/src/main/resources</directory>
-                        <filtering>true</filtering>
-                        <excludes>
-                            <exclude>static/**</exclude>
-                            <exclude>templates/**</exclude>
-                            <exclude>application*.yml</exclude>
-                            <exclude>logback-spring.xml</exclude>
-                        </excludes>
-                    </resource>
-                    <resource>
-                        <directory>${basedir}/src/main/resources</directory>
-                        <targetPath>${project.build.directory}/${project.artifactId}/html</targetPath>
-                        <includes>
-                            <include>templates/**</include>
-                            <include>static/**</include>
-                        </includes>
-                    </resource>
-                    <resource>
-                        <directory>${basedir}/src/main/resources</directory>
-                        <targetPath>${project.build.directory}/${project.artifactId}/config</targetPath>
-                        <includes>
-                            <include>application*.yml</include>
-                            <include>logback-spring.xml</include>
-                        </includes>
-                    </resource>
-                    <resource>
-                        <directory>${basedir}/scripts</directory>
-                        <targetPath>${project.build.directory}/${project.artifactId}/bin/</targetPath>
-                        <includes>
-                            <include>start.sh</include>
-                            <include>stop.sh</include>
-                            <include>restart.sh</include>
-                        </includes>
-                    </resource>
-                    <resource>
-                        <directory>scripts/run-jar</directory>
-                        <targetPath>${project.build.directory}/${project.artifactId}/bin/</targetPath>
-                        <includes>
-                            <include>run.sh</include>
-                        </includes>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-
-        <!-- ============================================= -->
-        <!-- Profile 3: Native Build                       -->
+        <!-- Profile: Native Build                       -->
         <!-- ============================================= -->
         <profile>
             <id>native</id>
@@ -207,48 +105,6 @@
                 <native.image>true</native.image>
             </properties>
             <build>
-                <resources>
-                    <resource>
-                        <directory>${basedir}/src/main/resources</directory>
-                        <filtering>true</filtering>
-                        <excludes>
-                            <exclude>static/**</exclude>
-                            <exclude>templates/**</exclude>
-                            <exclude>application*.yml</exclude>
-                        </excludes>
-                    </resource>
-                    <resource>
-                        <directory>${basedir}/src/main/resources</directory>
-                        <targetPath>${project.build.directory}/${project.artifactId}/html</targetPath>
-                        <includes>
-                            <include>templates/**</include>
-                            <include>static/**</include>
-                        </includes>
-                    </resource>
-                    <resource>
-                        <directory>${basedir}/src/main/resources</directory>
-                        <targetPath>${project.build.directory}/${project.artifactId}/config</targetPath>
-                        <includes>
-                            <include>application*.yml</include>
-                        </includes>
-                    </resource>
-                    <resource>
-                        <directory>${basedir}/scripts</directory>
-                        <targetPath>${project.build.directory}/${project.artifactId}/bin/</targetPath>
-                        <includes>
-                            <include>start.sh</include>
-                            <include>stop.sh</include>
-                            <include>restart.sh</include>
-                        </includes>
-                    </resource>
-                    <resource>
-                        <directory>scripts/run-native</directory>
-                        <targetPath>${project.build.directory}/${project.artifactId}/bin/</targetPath>
-                        <includes>
-                            <include>run.sh</include>
-                        </includes>
-                    </resource>
-                </resources>
                 <plugins>
                     <plugin>
                         <groupId>org.graalvm.buildtools</groupId>
@@ -268,7 +124,7 @@
                             <buildArgs>
                                 <buildArg>--verbose</buildArg>
                                 <buildArg>--enable-url-protocols=http,https,file</buildArg>
-                                <buildArg>-H:Path=${project.build.directory}/${project.artifactId}</buildArg>
+                                <buildArg>-H:Path=${project.build.directory}</buildArg>
                                 <buildArg>-H:Name=${project.artifactId}</buildArg>
                             </buildArgs>
                         </configuration>

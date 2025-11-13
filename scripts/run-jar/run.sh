@@ -3,9 +3,10 @@ ACTION=$1
 START_WAIT_TIME=2
 STOP_WAIT_TIME=1
 
-SHELL_DIR=$(cd `dirname $0`; pwd)
-SHELL_HOME=$(dirname ${SHELL_DIR})
-echo "SHELL_DIR:"${SHELL_DIR}
+# SHELL_DIR=$(cd `dirname $0`; pwd)
+# echo "SHELL_DIR:"${SHELL_DIR}
+# SHELL_HOME=$(dirname ${SHELL_DIR})
+SHELL_HOME=$(cd `dirname $0`; pwd)
 echo "SHELL_HOME"${SHELL_HOME}
 
 JAVA_HOME=java
@@ -55,8 +56,7 @@ start_app() {
     exit 0
   fi
   echo "start app in ${START_WAIT_TIME} seconds..."
-  nohup ${JAVA_HOME} ${AGENT_OPTS} ${JVM_OPTS} -DAPP_HOME=${APP_HOME} -jar ${APP_HOME}/lib/${APP_EXE} \
-  --spring.config.location=${APP_HOME}/config/application.yml \
+  nohup ${JAVA_HOME} ${AGENT_OPTS} ${JVM_OPTS} -DAPP_HOME=${APP_HOME} -jar ${APP_HOME}/${APP_EXE} \
   --spring.profiles.active=${APP_ENV} 2>&1 >> ${APP_LOG_DIR}/start.log &
   echo $! > "${APP_PID_FILE}"
   echo "Start ${APP_EXE} success..."

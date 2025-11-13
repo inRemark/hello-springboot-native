@@ -3,9 +3,10 @@ ACTION=$1
 START_WAIT_TIME=2
 STOP_WAIT_TIME=1
 
-SHELL_DIR=$(cd `dirname $0`; pwd)
-SHELL_HOME=$(dirname ${SHELL_DIR})
-echo "SHELL_DIR:"${SHELL_DIR}
+# SHELL_DIR=$(cd `dirname $0`; pwd)
+# echo "SHELL_DIR:"${SHELL_DIR}
+# SHELL_HOME=$(dirname ${SHELL_DIR})
+SHELL_HOME=$(cd `dirname $0`; pwd)
 echo "SHELL_HOME"${SHELL_HOME}
 
 APP_EXE=hello-springboot-native
@@ -41,7 +42,6 @@ start_app() {
   fi
   echo "start app in ${START_WAIT_TIME} seconds..."
   nohup ${APP_HOME}/${APP_EXE} -DAPP_HOME=${APP_HOME}  \
-  --spring.config.location=${APP_HOME}/config/application.yml \
   --spring.profiles.active=${APP_ENV} 2>&1 >> ${APP_LOG_DIR}/start.log &
   echo $! > "${APP_PID_FILE}"
   echo "Start ${APP_EXE} success..."

@@ -1,22 +1,32 @@
 FROM ghcr.io/graalvm/native-image-community:25-ol9 AS builder
 
+#ENV LANG=en_US.UTF-8 \
+#    LANGUAGE=en_US:en \
+#    LC_ALL=en_US.UTF-8
+
 WORKDIR /workspace
+
+COPY mvnw .
+COPY .mvn ./.mvn
 COPY pom.xml .
 COPY src ./src
 
-# GraalVM CE 通常已包含 native-image，但验证一下
-RUN gu list || gu install native-image
-
+RUN chmod +x mvnw
 # Build Spring Boot native image for Linux; name the binary 'app'
-RUN ./mvnw -Pnative -DskipTests -Dnative.imageName=app native:compile
+RUN ./mvnw -Pnative -DskipTests native:compile
 
 # ---- Runtime stage ----
-FROM ubuntu:22.04
+FROM ubuntu:jammy
 
 WORKDIR /app
-COPY --from=build /workspace/target/app ./app
+COPY --from=builder /workspace/target/hello-springboot-native ./app
+
 RUN groupadd -r spring && useradd -r -g spring spring
 USER spring
 
 EXPOSE 8080
+
+# Define environment variable
+ENV APP_HOME=/app
+ENV SPRING_PROFILES_ACTIVE=prod
 ENTRYPOINT ["./app"]
