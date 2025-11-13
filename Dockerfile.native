@@ -16,17 +16,18 @@ RUN chmod +x mvnw
 RUN ./mvnw clean package -Pnative -DskipTests
 
 # ---- Runtime stage ----
+# gcr.io/distroless/base-debian12（Supports multiple arch）
 FROM ubuntu:jammy
 
 WORKDIR /app
-COPY --from=builder /workspace/target/app ./app
-
-RUN groupadd -r spring && useradd -r -g spring spring
-USER spring
+USER 1001
+COPY --from=builder --chown=1001:1001 /workspace/target/app ./app
 
 EXPOSE 8080
 
 # Define environment variable
 ENV APP_HOME=/app
 ENV SPRING_PROFILES_ACTIVE=prod
-ENTRYPOINT ["./app"]
+ENTRYPOINT ["sh", "-c", "exec ./app --spring.config.import=optional:/config/"]
+
+#docker run -p 8080:8080 -v $(pwd)/config:/config -e SPRING_PROFILES_ACTIVE=prod boot-native:latest
